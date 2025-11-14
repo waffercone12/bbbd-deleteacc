@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Account - BBBD</title>
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Brand Colors */
+            --gold: #D4AF37;
+            --gold-dark: #B8941F;
+            --gold-light: #E6C84A;
+            --black: #000000;
+            --dark-gray: #0A0A0A;
+            --medium-gray: #1A1A1A;
+            --light-gray: #2A2A2A;
+            --white: #FFFFFF;
+            --off-white: #F5F5F5;
+            --text-gray: #A0A0A0;
+            
+            /* Semantic Colors */
+            --danger: #DC2626;
+            --danger-hover: #B91C1C;
+            --warning-bg: #422006;
+            --warning-border: #D97706;
+            --warning-text: #FCD34D;
+            
+            /* Fonts */
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--black);
+            color: var(--white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        /* Logo/Header Navigation */
+        .top-nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 24px 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 4px;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 600px;
+            width: 100%;
+            margin-top: 80px;
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .header-line {
+            width: 100%;
+            height: 1px;
+            background-color: var(--gold);
+            margin-bottom: 32px;
+        }
+
+        .header h1 {
+            font-family: var(--font-heading);
+            font-size: 56px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .header h1 .gold {
+            color: var(--gold);
+        }
+
+        .header p {
+            color: var(--text-gray);
+            font-size: 16px;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background-color: var(--warning-bg);
+            border-left: 3px solid var(--warning-border);
+            padding: 20px 24px;
+            margin-bottom: 40px;
+            border-radius: 0;
+        }
+
+        .warning-box p {
+            color: var(--warning-text);
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .warning-box strong {
+            font-weight: 600;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 32px;
+        }
+
+        label {
+            display: block;
+            color: var(--white);
+            font-weight: 500;
+            margin-bottom: 12px;
+            font-size: 14px;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+
+        label .required {
+            color: var(--gold);
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 16px 20px;
+            background-color: var(--medium-gray);
+            border: 1px solid var(--light-gray);
+            border-radius: 0;
+            font-size: 16px;
+            color: var(--white);
+            font-family: var(--font-body);
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            background-color: var(--dark-gray);
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: var(--text-gray);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 140px;
+            line-height: 1.6;
+        }
+
+        /* Button Styles */
+        .btn-container {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .delete-btn {
+            width: 100%;
+            background-color: var(--danger);
+            color: var(--white);
+            border: none;
+            padding: 18px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 0;
+        }
+
+        .delete-btn:hover:not(:disabled) {
+            background-color: var(--danger-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(220, 38, 38, 0.3);
+        }
+
+        .delete-btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .delete-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Cancel Link */
+        .cancel-link {
+            display: block;
+            text-align: center;
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            transition: color 0.3s ease;
+            padding: 12px;
+        }
+
+        .cancel-link:hover {
+            color: var(--gold);
+        }
+
+        /* Snackbar */
+        .snackbar {
+            visibility: hidden;
+            min-width: 300px;
+            background-color: var(--medium-gray);
+            color: var(--white);
+            text-align: center;
+            border-radius: 0;
+            padding: 18px 24px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 40px;
+            transform: translateX(-50%);
+            font-size: 14px;
+            border-left: 3px solid var(--gold);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        }
+
+        .snackbar.show {
+            visibility: visible;
+            animation: slideUp 0.5s, slideDown 0.5s 2.5s;
+        }
+
+        @keyframes slideUp {
+            from {
+                bottom: 0;
+                opacity: 0;
+            }
+            to {
+                bottom: 40px;
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                bottom: 40px;
+                opacity: 1;
+            }
+            to {
+                bottom: 0;
+                opacity: 0;
+            }
+        }
+
+        .snackbar.success {
+            border-left-color: var(--gold);
+        }
+
+        .snackbar.error {
+            border-left-color: var(--danger);
+        }
+
+        /* Loader */
+        .loader {
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            border-top: 3px solid var(--gold);
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer p {
+            color: var(--text-gray);
+            font-size: 13px;
+            font-weight: 300;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .top-nav {
+                padding: 20px 24px;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            .nav-links a {
+                font-size: 13px;
+            }
+
+            .container {
+                margin-top: 100px;
+            }
+
+            .header h1 {
+                font-size: 40px;
+            }
+
+            input,
+            textarea {
+                padding: 14px 16px;
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 16px;
+            }
+
+            .top-nav {
+                padding: 16px 20px;
+            }
+
+            .header h1 {
+                font-size: 32px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <div class="top-nav">
+        <a href="https://breakingbarriersbuildingdreams.io/" class="logo">
+            <img src="icon.png" alt="Breaking Barriers Building Dreams">
+        </a>
+    </div>
+    <br>
+    <br>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="header">
+            <div class="header-line"></div>
+            <h1><span class="gold">Delete</span> Account</h1>
+            <p>We're sorry to see you go. Please provide your details below to proceed.</p>
+        </div>
+
+        <div class="warning-box">
+            <p><strong>⚠️ Important:</strong> This action cannot be undone. All your data, progress, and achievements will be permanently deleted after verification.</p>
+        </div>
+
+        <form id="deleteAccountForm">
+            <div class="form-group">
+                <label for="email">
+                    Email Address <span class="required">*</span>
+                </label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    placeholder="Enter your registered email address"
+                    required
+                    autocomplete="email"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="reason">
+                    Reason for Deletion <span class="required">*</span>
+                </label>
+                <textarea 
+                    id="reason" 
+                    name="reason" 
+                    placeholder="Please tell us why you're deleting your account. Your feedback helps us improve our platform."
+                    required
+                ></textarea>
+            </div>
+
+            <div class="btn-container">
+                <button type="submit" class="delete-btn" id="submitBtn">
+                    Delete My Account
+                </button>
+                <a href="https://breakingbarriersbuildingdreams.io/" class="cancel-link">
+                    ← Cancel and Return to Dashboard
+                </a>
+            </div>
+        </form>
+
+        <div class="footer">
+            <p>A confirmation email will be sent to your inbox. Please click the confirmation link to complete the deletion process.</p>
+        </div>
+    </div>
+
+    <div id="snackbar" class="snackbar"></div>
+
+    <script>
+        // ⚠️ IMPORTANT: Replace this URL with your Google Apps Script Web App URL
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlYSAIguFAMI5-rQ4-wWRXOgFkK4fSLSXlxuxPCs3QyOAzr8olIha006oQpdhpPJJcYw/exec';
+
+        // Snackbar notification function
+        function showSnackbar(message, type = 'success') {
+            const snackbar = document.getElementById('snackbar');
+            snackbar.textContent = message;
+            snackbar.className = 'snackbar show ' + type;
+            
+            setTimeout(() => {
+                snackbar.className = snackbar.className.replace('show', '');
+            }, 3000);
+        }
+
+        // Save data to Google Sheets
+        async function saveToGoogleSheets(email, reason) {
+            const timestamp = new Date().toLocaleString();
+            
+            const data = {
+                email: email,
+                reason: reason,
+                timestamp: timestamp,
+                status: 'Pending Verification'
+            };
+
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                return true;
+            } catch (error) {
+                console.error('Error saving to Google Sheets:', error);
+                throw error;
+            }
+        }
+
+        // Form submission handler
+        document.getElementById('deleteAccountForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value.trim();
+            const reason = document.getElementById('reason').value.trim();
+            const submitBtn = document.getElementById('submitBtn');
+
+            // Validate inputs
+            if (!email || !reason) {
+                showSnackbar('Please fill in all required fields.', 'error');
+                return;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showSnackbar('Please enter a valid email address.', 'error');
+                return;
+            }
+
+            // Check if Google Script URL is configured
+            if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+                showSnackbar('⚠️ Google Sheets integration not configured. Please check setup instructions.', 'error');
+                return;
+            }
+
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="loader"></span>Processing...';
+
+            try {
+                // Save to Google Sheets
+                await saveToGoogleSheets(email, reason);
+
+                // Show success message
+                showSnackbar('✓ Confirmation email sent to ' + email + '. Please check your inbox.', 'success');
+
+                // Reset form after short delay
+                setTimeout(() => {
+                    document.getElementById('deleteAccountForm').reset();
+                }, 1000);
+
+                // Optional: Redirect after 3 seconds
+                // setTimeout(() => {
+                //     window.location.href = 'https://breakingbarriersbuildingdreams.io/';
+                // }, 3000);
+
+            } catch (error) {
+                console.error('Error:', error);
+                showSnackbar('An error occurred. Please try again later.', 'error');
+            } finally {
+                // Re-enable button
+                setTimeout(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = 'Delete My Account';
+                }, 1500);
+            }
+        });
+
+        // Cancel link confirmation
+        document.querySelector('.cancel-link').addEventListener('click', function(e) {
+            const form = document.getElementById('deleteAccountForm');
+            const email = document.getElementById('email').value.trim();
+            const reason = document.getElementById('reason').value.trim();
+            
+            // Only confirm if form has been filled
+            if (email || reason) {
+                e.preventDefault();
+                if (confirm('Are you sure you want to cancel? Your entered information will be lost.')) {
+                    window.location.href = 'https://breakingbarriersbuildingdreams.io/';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
